@@ -18,8 +18,7 @@
  * '04 Dec 1995 00:12:00 UTC' => 818035920000
  */
 function dateToTimestamp(date) {
-  const timestamp = new Date(date).getTime();
-  return timestamp;
+  return new Date(date).getTime();
 }
 
 /**
@@ -78,12 +77,19 @@ function getDayName(date) {
  */
 function getNextFriday(date) {
   const newdate = new Date(date);
-  const dayOfWeek = newdate.getDay();
-  const daysUntilFriday = (5 - dayOfWeek + 7) % 7; // Calculate days until next Friday
+  const dayOfWeek = newdate.getUTCDay();
+  let daysUntilFriday;
+  if (dayOfWeek === 6) {
+    daysUntilFriday = 6;
+  } else if (dayOfWeek === 5) {
+    daysUntilFriday = 7;
+  } else {
+    daysUntilFriday = 5 - dayOfWeek;
+  }
   const nextFriday = new Date(
     newdate.getTime() + daysUntilFriday * 24 * 60 * 60 * 1000
   );
-  nextFriday.setHours(0, 0, 0, 0);
+  nextFriday.setUTCHours(0, 0, 0, 0);
   return nextFriday;
 }
 
