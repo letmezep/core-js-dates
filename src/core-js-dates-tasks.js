@@ -89,7 +89,6 @@ function getNextFriday(date) {
   const nextFriday = new Date(
     newdate.getTime() + daysUntilFriday * 24 * 60 * 60 * 1000
   );
-  nextFriday.setUTCHours(0, 0, 0, 0);
   return nextFriday;
 }
 
@@ -104,8 +103,24 @@ function getNextFriday(date) {
  * 1, 2024 => 31
  * 2, 2024 => 29
  */
-function getCountDaysInMonth(/* month, year */) {
-  throw new Error('Not implemented');
+function getCountDaysInMonth(month, year) {
+  const whatYear = (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+  const daysInMonth = {
+    1: 31,
+    2: whatYear ? 29 : 28,
+    3: 31,
+    4: 30,
+    5: 31,
+    6: 30,
+    7: 31,
+    8: 31,
+    9: 30,
+    10: 31,
+    11: 30,
+    12: 31,
+  };
+
+  return daysInMonth[month];
 }
 
 /**
